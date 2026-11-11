@@ -1,0 +1,2 @@
+- [x] Add operating office address and Google Map to home Contact and footer.
+- [x] Test office configuration and verify desktop/mobile in light and dark modes.
