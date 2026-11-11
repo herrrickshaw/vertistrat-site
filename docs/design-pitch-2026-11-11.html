@@ -1,0 +1,182 @@
+<title>VertiStrat Site Design Pitch</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@500;600;700;800&family=Instrument+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one reading column, a proposal per row (problem left, change right), one wireframe as the only picture. */
+:root{
+  --bg:#f8f9fb; --surface:#ffffff; --fg:#14181f; --muted:#5a6270; --line:#e1e5eb;
+  --accent:#2b5ff5; --accent-soft:#e8eefe; --amber:#d97a06; --amber-soft:#fdf0dc; --ink:#10131a; --ink-fg:#f2f4f8; --ok:#1f7a4d;
+  --display:"Host Grotesk",ui-sans-serif,system-ui,sans-serif;
+  --body:"Instrument Sans",ui-sans-serif,system-ui,sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#0f1218; --surface:#171b24; --fg:#eef0f5; --muted:#a2aab8; --line:#272d3a;
+  --accent:#7aa2ff; --accent-soft:#1c2744; --amber:#f0a040; --amber-soft:#2d2314; --ink:#07090d; --ink-fg:#eef0f5; --ok:#5cc58f; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1218; --surface:#171b24; --fg:#eef0f5; --muted:#a2aab8; --line:#272d3a;
+  --accent:#7aa2ff; --accent-soft:#1c2744; --amber:#f0a040; --amber-soft:#2d2314; --ink:#07090d; --ink-fg:#eef0f5; --ok:#5cc58f; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--body);padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0}
+.wrap{max-width:62rem;margin:0 auto;padding-block:3rem 4rem}
+h1,h2,h3{font-family:var(--display);letter-spacing:-.025em;line-height:1.12;margin:0;text-wrap:balance}
+h1{font-size:clamp(2rem,5.2vw,3.4rem);letter-spacing:-.04em}
+h2{font-size:clamp(1.4rem,3vw,1.9rem)}
+h3{font-size:1.1rem}
+p{margin:0;max-width:65ch}
+.eyebrow{font:500 .72rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:.5rem}
+.eyebrow::before{content:"";width:.5rem;height:.5rem;background:var(--amber)}
+.lede{font-size:1.15rem;color:var(--muted);margin-top:1rem}
+section{margin-top:3.5rem;display:grid;gap:1.25rem}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(14rem,1fr));gap:.75rem;margin:0;padding:0;list-style:none}
+.facts li{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:.9rem 1rem;font-size:.95rem}
+.facts b{display:block;font:600 .72rem/1 var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:.4rem}
+.move{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:0;border:1px solid var(--line);border-radius:14px;background:var(--surface);overflow:hidden}
+.move>div{padding:1.25rem 1.4rem;min-width:0}
+.move .now{background:color-mix(in oklab,var(--amber-soft) 55%,var(--surface))}
+.move .tag{font:500 .7rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:.6rem}
+.move .change .tag{color:var(--accent)}
+.move h3{margin-bottom:.5rem}
+.move ul{margin:.5rem 0 0;padding-left:1.1rem;color:var(--muted)}
+.move li+li{margin-top:.25rem}
+@media (max-width:720px){.move{grid-template-columns:1fr}}
+.shipped{display:grid;grid-template-columns:repeat(auto-fit,minmax(16rem,1fr));gap:1rem}
+.col{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.1rem 1.3rem}
+.col h3{margin-bottom:.6rem}
+.col ul{margin:0;padding:0;list-style:none;display:grid;gap:.45rem}
+.col li{display:flex;gap:.6rem;align-items:baseline;font-size:.95rem}
+.col li::before{content:"";flex:none;width:.55rem;height:.55rem;border-radius:50%;background:var(--ok);transform:translateY(.05rem)}
+.col.next li::before{background:transparent;border:2px solid var(--amber)}
+.wire{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1rem;display:grid;gap:.75rem}
+.wire .bar{display:flex;gap:.5rem;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:.6rem;font:500 .72rem/1 var(--mono);color:var(--muted);flex-wrap:wrap}
+.wire .hero{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);gap:1rem;align-items:stretch}
+.wire .hl{font:700 clamp(1.3rem,3.2vw,2rem)/1.1 var(--display);letter-spacing:-.03em}
+.wire .hl em{font-style:normal;background:linear-gradient(var(--amber),var(--amber)) 0 92%/100% .14em no-repeat}
+.wire .btns{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.8rem}
+.btn{font:600 .85rem/1 var(--body);border-radius:8px;padding:.65rem .9rem;border:1px solid var(--line)}
+.btn.p{background:var(--accent);color:#fff;border-color:var(--accent)}
+.proof{background:var(--ink);color:var(--ink-fg);border-radius:10px;padding:.9rem 1rem;display:grid;gap:.5rem;font-size:.85rem}
+.proof .k{font:500 .66rem/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;opacity:.7}
+.proof .row{display:flex;gap:.6rem;align-items:baseline;border-top:1px solid color-mix(in oklab,var(--ink-fg) 18%,transparent);padding-top:.5rem}
+.proof .row span:first-child{font:500 .7rem/1 var(--mono);opacity:.7;flex:none}
+.strip{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:.5rem}
+.strip div{border:1px dashed var(--line);border-radius:8px;padding:.6rem .7rem;font-size:.82rem;color:var(--muted)}
+.cap{font-size:.85rem;color:var(--muted)}
+@media (max-width:640px){.wire .hero{grid-template-columns:1fr}}
+.decide{display:grid;gap:.6rem;margin:0;padding:0;list-style:none;counter-reset:d}
+.decide li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:.9rem 1.1rem;display:grid;gap:.2rem}
+.decide b{font-family:var(--display);font-size:1.02rem}
+.decide span{color:var(--muted);font-size:.95rem}
+footer{margin-top:3.5rem;padding-top:1.2rem;border-top:1px solid var(--line);color:var(--muted);font-size:.85rem}
+a{color:var(--accent)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">VertiStrat Solutions LLP · website design pitch · 11 Nov 2026</div>
+    <h1 style="margin-top:1rem">Make the site prove what the firm says.</h1>
+    <p class="lede">The site already says the right thing: policy desk to plant floor, across manufacturing, IT services, biofuels and energy, and investment facilitation. What it does not yet do is show the evidence behind that claim in the first screen. This pitch proposes six changes that move the evidence to the front and remove what makes a cautious buyer hesitate.</p>
+  </header>
+
+  <section aria-labelledby="now">
+    <h2 id="now">Where the site stands today</h2>
+    <ul class="facts">
+      <li><b>Structure</b>Home, About, three practice pages, Insights, Trade ideas, one contact section.</li>
+      <li><b>Evidence on hand</b>501 articles in a searchable library, 5 research themes, 20 featured pieces, a most-read list.</li>
+      <li><b>Look</b>Bento tiles, electric blue with an amber highlight, Host Grotesk and Instrument Sans, light and dark modes.</li>
+      <li><b>Gaps a buyer sees</b>LLPIN and registered office still read "[placeholder]" in the footer. The disclaimer and trade-ideas link carry placeholder text.</li>
+      <li><b>Enquiry path</b>A Google Form embedded in a 1,000 to 1,150 px tall frame.</li>
+      <li><b>Read from</b>The live site and its source on 10 Nov 2026.</li>
+    </ul>
+  </section>
+
+  <section aria-labelledby="moves">
+    <h2 id="moves">Six moves</h2>
+
+    <article class="move">
+      <div class="now"><div class="tag">Today</div><h3>The hero makes a claim</h3><p>"From the policy desk to the plant floor" is followed by a generic factory line drawing and four tiles with no content behind them.</p></div>
+      <div class="change"><div class="tag">Change</div><h3>Open with proof beside the promise</h3><p>Keep the headline. Replace the line drawing with a live strip: the three newest research pieces with dates, the article count, and one data point from each practice.</p><ul><li>Pulls from the existing library, so it updates when the blog does.</li><li>A visitor sees recent, dated work before scrolling.</li></ul></div>
+    </article>
+
+    <article class="move">
+      <div class="now"><div class="tag">Today</div><h3>Trust details are unfinished</h3><p>The footer shows "LLPIN: [placeholder]" and "Registered office: [placeholder]". The disclaimer asks to be replaced.</p></div>
+      <div class="change"><div class="tag">Change</div><h3>Finish the credibility block before any outreach</h3><p>Fill LLPIN, registered office and the regulatory disclaimer, and move them into a short "About the firm" block that is also linked from the footer.</p><ul><li>Needs your registration details; I will not invent them.</li><li>Blocks nothing else, but every outreach email links here.</li></ul></div>
+    </article>
+
+    <article class="move">
+      <div class="now"><div class="tag">Today</div><h3>Navigation is flat</h3><p>Six links plus Contact, with practices, insights and trade ideas on one level.</p></div>
+      <div class="change"><div class="tag">Change</div><h3>Group by what the visitor wants to do</h3><p>Services (three practices), Research (insights, trade ideas), About, and one persistent "Talk to us" button.</p><ul><li>Mobile menu becomes a proper slide-in panel with Escape to close and focus handling.</li><li>The current page is marked in the nav.</li></ul></div>
+    </article>
+
+    <article class="move">
+      <div class="now"><div class="tag">Today</div><h3>Contact is a long embedded form</h3><p>The enquiry form sits in a 1,000 to 1,150 px frame loaded from Google, with a link out and an email address underneath.</p></div>
+      <div class="change"><div class="tag">Change</div><h3>Ask four questions, promise a reply time</h3><p>Name, company, what you are planning, and a contact route. Show the response time you can keep next to the button. Keep Google Forms as the backend if you want the same inbox.</p><ul><li>Fewer fields raise completion.</li><li>Needs a decision on the reply-time promise.</li></ul></div>
+    </article>
+
+    <article class="move">
+      <div class="now"><div class="tag">Today</div><h3>Insights sits beside the services, not inside them</h3><p>"Discuss this" links go to the same contact section whatever you were reading.</p></div>
+      <div class="change"><div class="tag">Change</div><h3>Let each article open the right conversation</h3><p>Each practice page lists its three most relevant articles, and every article ends with a prefilled enquiry for that topic.</p><ul><li>The theme re-sort this week makes the matching more accurate.</li><li>Gives you a record of which research produces enquiries.</li></ul></div>
+    </article>
+
+    <article class="move">
+      <div class="now"><div class="tag">Today</div><h3>Little shows the work behind the advice</h3><p>No client names or case summaries yet, which is correct while there are none to share.</p></div>
+      <div class="change"><div class="tag">Change</div><h3>Add "How an engagement runs" with a sample</h3><p>A one-page walk-through of a typical project, using a published piece such as the IEM state analysis as the worked example, labelled as research and not as a client result.</p><ul><li>No invented clients or results.</li><li>Swap in real engagements when you have permission to name them.</li></ul></div>
+    </article>
+  </section>
+
+  <section aria-labelledby="wire">
+    <h2 id="wire">What the first screen could look like</h2>
+    <div class="wire" role="img" aria-label="Wireframe of the proposed home page first screen: headline and buttons on the left, a dark proof panel with three dated research headlines on the right, and a strip of four practice tiles below.">
+      <div class="bar"><span>VertiStrat</span><span>Services · Research · About</span><span class="btn p" style="padding:.4rem .6rem">Talk to us</span></div>
+      <div class="hero">
+        <div>
+          <div class="hl">From the <em>policy desk</em> to the plant floor.</div>
+          <p class="cap" style="margin-top:.5rem">One team for the plan, the incentives and the IT.</p>
+          <div class="btns"><span class="btn p">Discuss a project</span><span class="btn">Read the research</span></div>
+        </div>
+        <div class="proof">
+          <div class="k">Latest research · 501 articles</div>
+          <div class="row"><span>08 NOV</span><span>IDBI Bank rescue: what the state and LIC get back</span></div>
+          <div class="row"><span>07 NOV</span><span>Fuel theft in India, from kerosene to ethanol</span></div>
+          <div class="row"><span>28 OCT</span><span>The 15% gas target against the energy balance</span></div>
+        </div>
+      </div>
+      <div class="strip"><div>Manufacturing</div><div>IT services</div><div>Biofuels and energy</div><div>Investment facilitation</div></div>
+    </div>
+    <p class="cap">Wireframe, not final art. Headlines are real published titles shortened for the frame.</p>
+  </section>
+
+  <section aria-labelledby="base">
+    <h2 id="base">Quality baseline</h2>
+    <div class="shipped">
+      <div class="col"><h3>Shipped this week</h3><ul>
+        <li>Browser colour scheme declared in CSS, so dark mode covers scrollbars and form controls</li>
+        <li>Page follows the phone's text-size setting in Chrome and Edge</li>
+        <li>Smooth page-to-page transitions, off for visitors who ask for less motion</li>
+        <li>501 articles re-sorted into six themes; 20 featured articles refreshed</li>
+        <li>Guide tiles match whole words, Approvals tile widened</li>
+      </ul></div>
+      <div class="col next"><h3>Next</h3><ul>
+        <li>Size-matched fallback fonts so text does not jump when the web fonts load</li>
+        <li>Slide-in mobile menu with keyboard and focus handling</li>
+        <li>Click-to-load for the enquiry form, or the four-question form above</li>
+        <li>A Lighthouse run on home and Insights, kept as a baseline</li>
+      </ul></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="decide">
+    <h2 id="decide">Decisions I need from you</h2>
+    <ol class="decide">
+      <li><b>Registration details</b><span>LLPIN, registered office and the regulatory wording for the disclaimer.</span></li>
+      <li><b>Reply-time promise</b><span>Which response time you can keep, for example one working day, shown next to the form button.</span></li>
+      <li><b>Order of work</b><span>My suggestion: credibility block, then the proof strip on the hero, then navigation, then the form.</span></li>
+    </ol>
+  </section>
+
+  <footer>Prepared from a read of the live site and its source on 10 Nov 2026. Counts of articles and themes come from the site's own library. Proposals are untested until built; nothing here is published to the live site.</footer>
+</div>

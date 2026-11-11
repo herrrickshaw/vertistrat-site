@@ -1,0 +1,38 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@font-face{font-family:Host;src:url(fonts/host.woff2);font-weight:100 900}
+@font-face{font-family:Inst;src:url(fonts/instrument.woff2);font-weight:100 900}
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1080px;height:1350px;background:#fff;color:#0A0D12;font-family:Inst,sans-serif;position:relative;overflow:hidden}
+h1,.h{font-family:Host,sans-serif;letter-spacing:-.02em}
+.top{background:#0A0D12;color:#fff;padding:44px 64px 30px}
+.kick{color:#EB8A00;font:700 22px Host;letter-spacing:.14em;text-transform:uppercase}
+h1{font-size:50px;line-height:1.05;margin-top:14px;font-weight:700}
+.sub{color:#B9C2D0;font-size:24px;margin-top:14px;line-height:1.35}
+.foot{position:absolute;left:0;right:0;bottom:0;height:92px;background:#1E64EF;color:#fff;display:flex;justify-content:space-between;align-items:center;padding:0 64px}
+.foot b{font:700 30px Host}.foot span{font-size:20px;opacity:.92;text-align:right;line-height:1.3}
+.src{position:absolute;left:64px;right:64px;bottom:108px;font-size:15.5px;color:#5B6676;line-height:1.35}
+</style></head><body><div class="top"><div class="kick">Project tracking workflow</div><h1>Intent → clearance → production</h1>
+<div class="sub">One record per project, moving through three public checkpoints. Each stage has a reference number to track.</div></div>
+<div style="padding:24px 64px 0;display:flex;gap:26px">
+ <div style="width:600px">
+  <div style="display:flex;align-items:center;margin:0 0 14px"><div style="width:600px;margin:0 auto;background:#1E64EF;color:#fff;border-radius:12px;padding:18px 24px;min-height:116px">
+<div style="font:700 19px Host;letter-spacing:.08em;opacity:.9">STAGE 1 · DPIIT</div><div class="h" style="font-size:34px;font-weight:700;margin-top:4px">IEM Part A filed</div>
+<div style="display:flex;align-items:baseline;gap:12px;margin-top:4px"><div class="h" style="font-size:44px;font-weight:700;white-space:nowrap">5,629</div><div style="font-size:20px;opacity:.92">filings 2021–25 · ₹28.4 lakh cr</div></div></div></div>
+  <div style="display:flex;align-items:center;margin:0 0 14px"><div style="width:490px;margin:0 auto;border:3px dashed #1E64EF;background:#fff;color:#0A0D12;border-radius:12px;padding:18px 24px;min-height:116px">
+<div style="font:700 19px Host;letter-spacing:.08em;opacity:.9">STAGE 2 · MOEFCC</div><div class="h" style="font-size:34px;font-weight:700;margin-top:4px">Environmental clearance</div>
+<div style="display:flex;align-items:baseline;gap:12px;margin-top:4px"><div class="h" style="font-size:34px;font-weight:700;white-space:nowrap">2021–25</div><div style="font-size:20px;opacity:.92">EC only · count pending</div></div></div></div>
+  <div style="display:flex;align-items:center;margin:0 0 14px"><div style="width:430px;margin:0 auto;background:#EB8A00;color:#fff;border-radius:12px;padding:18px 24px;min-height:116px">
+<div style="font:700 19px Host;letter-spacing:.08em;opacity:.9">STAGE 3 · DPIIT</div><div class="h" style="font-size:34px;font-weight:700;margin-top:4px">IEM Part B</div>
+<div style="display:flex;align-items:baseline;gap:12px;margin-top:4px"><div class="h" style="font-size:44px;font-weight:700;white-space:nowrap">4,859</div><div style="font-size:20px;opacity:.92">filings · ₹19.5 lakh cr</div></div></div></div>
+ </div>
+ <div style="flex:1;padding-top:0"><div style="margin:0 0 14px;min-height:120px;font-size:19px;line-height:1.3;border-left:4px solid #D6DCE8;padding:12px 0 0 14px"><div style="font:700 17px Host;color:#5B6676;letter-spacing:.06em">TRACK</div>IEM acknowledgement no. + date, company, state, district, item, capacity</div><div style="margin:0 0 14px;min-height:120px;font-size:19px;line-height:1.3;border-left:4px solid #D6DCE8;padding:12px 0 0 14px"><div style="font:700 17px Host;color:#5B6676;letter-spacing:.06em">TRACK</div>EC proposal no., category (A/B), status, EC date. Forest and CRZ clearances are not counted.</div><div style="margin:0 0 14px;min-height:120px;font-size:19px;line-height:1.3;border-left:4px solid #D6DCE8;padding:12px 0 0 14px"><div style="font:700 17px Host;color:#5B6676;letter-spacing:.06em">TRACK</div>Memorandum no. + production start date. About 1 in 3 of 2016–19 filings can be traced to a Part B.</div></div>
+</div>
+<div style="padding:8px 64px 0">
+ <div class="h" style="font-size:26px;font-weight:700;margin-bottom:10px">How the tracker works</div>
+ <div style="display:flex;gap:14px">
+  <div style="flex:1;background:#F2F5FB;border-radius:12px;padding:16px 18px;font-size:20px;line-height:1.35"><b>1 · Load</b><br>Every Part A filing becomes a row, with state, item and date.</div>
+  <div style="flex:1;background:#F2F5FB;border-radius:12px;padding:16px 18px;font-size:20px;line-height:1.35"><b>2 · Link</b><br>Add the EC reference. Part B is matched by memorandum no. or name.</div>
+  <div style="flex:1;background:#F2F5FB;border-radius:12px;padding:16px 18px;font-size:20px;line-height:1.35"><b>3 · Flag</b><br>Stage and age update by formula. Stalled projects show up first.</div>
+ </div>
+</div>
+<div class="src">Counts from DPIIT Annual Report 2025-26, Appendices III and V (2025 = up to December 2025). Part A and Part B are different projects filed in different years, so the counts are not a conversion rate. The EC stage is dashed because its count has not been compiled yet.</div><div class="foot"><b>VertiStrat Solutions</b><span>Project advisory for energy, fuels &amp; industry<br>vertistratsolution.com</span></div></body></html>

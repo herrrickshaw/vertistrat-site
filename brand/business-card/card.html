@@ -1,0 +1,28 @@
+<!doctype html><meta charset="utf-8"><title>VertiStrat business card</title><style>
+@font-face { font-family:"Host Grotesk"; src:url(fonts/host.woff2); font-weight:400 800; }
+@font-face { font-family:"Instrument Sans"; src:url(fonts/instrument.woff2); font-weight:400 700; }
+@page { size:96mm 60mm; margin:0; }
+* { margin:0; padding:0; box-sizing:border-box; }
+html,body { background:#fff; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+.side { position:relative; width:96mm; height:60mm; overflow:hidden; break-after:page; font-family:"Instrument Sans"; }
+.side:last-child { break-after:auto; }
+.abs { position:absolute; }
+.brand { display:flex; align-items:center; gap:1.9mm; font-family:"Host Grotesk"; font-weight:700; letter-spacing:-.02em; }
+/* All positions below include the 3 mm bleed; the safe area starts at 8 mm. */
+.name { right:8.5mm; text-align:right; top:22mm; font-family:"Host Grotesk"; font-weight:700; font-size:14pt; line-height:1.14; letter-spacing:-.02em; color:#0E1217; }
+.title { right:8.5mm; text-align:right; top:35.2mm; font-size:8.5pt; font-weight:600; color:#1E64EF; }
+.contact { right:8.5mm; text-align:right; bottom:8.2mm; font-size:8pt; line-height:1.42; color:#0E1217; }
+</style>
+<div class="side" style="background:#fff">
+  <div class="abs brand" style="right:8.5mm;top:8.5mm;font-size:12pt;color:#0E1217"><svg style="height:5mm;width:5mm;display:block" viewBox="0 0 22 22"><rect x="0" y="13" width="5" height="9" rx="1" fill="#1E64EF"/><rect x="8" y="7" width="5" height="15" rx="1" fill="#1E64EF"/><rect x="16" y="0" width="5" height="22" rx="1" fill="#EB8A00"/></svg>VertiStrat</div>
+  <div class="abs name">Umashankar<br>Triplicane Dwarakanathan</div>
+  <div class="abs title">Founder</div>
+  <div class="abs contact">contact@vertistratsolution.com<br>+91 70222 59460</div>
+</div>
+<div class="side" style="background:#0A0D12;color:#fff">
+  <svg class="abs" style="inset:0;width:100%;height:100%" viewBox="0 0 400 250" preserveAspectRatio="xMinYMid slice"><path d="M -20 240 C 90 200, 160 290, 260 210 S 380 150, 430 170" stroke="#EB8A00" stroke-width="0.7" fill="none" opacity="0.20"/><path d="M -20 214 C 90 170, 160 256, 260 182 S 380 128, 430 146" stroke="#EB8A00" stroke-width="0.7" fill="none" opacity="0.24"/><path d="M -20 188 C 90 140, 160 222, 260 154 S 380 106, 430 122" stroke="#EB8A00" stroke-width="0.7" fill="none" opacity="0.28"/><path d="M -20 162 C 90 110, 160 188, 260 126 S 380 84, 430 98" stroke="#EB8A00" stroke-width="0.7" fill="none" opacity="0.32"/><path d="M -20 136 C 90 80, 160 154, 260 98 S 380 62, 430 74" stroke="#EB8A00" stroke-width="0.7" fill="none" opacity="0.36"/><path d="M -20 110 C 90 50, 160 120, 260 70 S 380 40, 430 50" stroke="#EB8A00" stroke-width="0.7" fill="none" opacity="0.40"/><path d="M -20 84 C 90 20, 160 86, 260 42 S 380 18, 430 26" stroke="#EB8A00" stroke-width="0.7" fill="none" opacity="0.44"/></svg>
+  <div class="abs" style="inset:0;background:linear-gradient(270deg,#0A0D12 0%,#0A0D12 58%,rgba(10,13,18,0) 82%)"></div>
+  <div class="abs brand" style="right:8.5mm;top:17.5mm;font-size:21pt;gap:3mm"><svg style="height:9mm;width:9mm;display:block" viewBox="0 0 22 22"><rect x="0" y="13" width="5" height="9" rx="1" fill="#1E64EF"/><rect x="8" y="7" width="5" height="15" rx="1" fill="#1E64EF"/><rect x="16" y="0" width="5" height="22" rx="1" fill="#EB8A00"/></svg>VertiStrat</div>
+  <div class="abs" style="right:8.5mm;text-align:right;top:31mm;font-size:10pt;line-height:1.3;color:#F6F7F9">From the policy desk<br>to the plant floor.</div>
+  <div class="abs" style="right:8.5mm;text-align:right;bottom:8.2mm;font-size:8pt;color:#A6ABB3">vertistratsolution.com</div>
+</div>
