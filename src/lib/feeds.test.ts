@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { isStale, mapFeed, parseTradeIdeas } from "./feeds";
+import { decodeEntities, isStale, mapFeed, parseTradeIdeas } from "./feeds";
 
 describe("trade ideas staleness", () => {
   const now = new Date("2026-10-23T00:00:00Z");
@@ -14,6 +14,19 @@ describe("parseTradeIdeas", () => {
       { symbol: "B", exchange: "NSE", action: "MAYBE" },
     ]);
     expect(rows.map((r) => r.symbol)).toEqual(["A"]);
+  });
+});
+
+describe("decodeEntities", () => {
+  it("decodes named, decimal and hex entities to plain text", () => {
+    expect(decodeEntities("Cabinet&rsquo;s &amp; &#8377;53,428 &#x20B9; crore")).toBe("Cabinet’s & ₹53,428 ₹ crore");
+  });
+  it("is used by mapFeed for titles and excerpts", () => {
+    const a = mapFeed({
+      feed: { entry: [{ title: { $t: "India&rsquo;s &#8377; bet" }, link: [{ rel: "alternate", href: "y" }], content: { $t: "<p>A&amp;B &#x20B9;1</p>" } }] },
+    })[0]!;
+    expect(a.title).toBe("India’s ₹ bet");
+    expect(a.excerpt).toBe("A&B ₹1");
   });
 });
 

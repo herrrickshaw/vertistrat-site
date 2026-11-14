@@ -74,7 +74,21 @@ def theme_for(p):
     for l in labels(p):
         if votes.get(l):
             return votes[l].most_common(1)[0][0]
+    # no labels yet (apply_labels.py not run before the snapshot): fall back to title keywords
+    text = f"{p['slug']} {title_of(p)}"
+    for slug, pattern in KEYWORDS:
+        if re.search(pattern, text, re.I):
+            return next(i for i, (s, _) in enumerate(themes) if s == slug)
     return TOOLS
+
+
+KEYWORDS = [
+    ("energy", r"ethanol|biofuel|biogas|fuel|petrol|diesel|\bLPG\b|\bLNG\b|\bgas\b|power|energy|solar|coal|refiner"),
+    ("agri-food", r"crop|farm|grain|rice|maize|wheat|sugar|dairy|milk|food|mandi|fertili[sz]er|cattle"),
+    ("trade", r"tariff|export|import|trade|\bHSN\b|customs|rupee|forex"),
+    ("capital-climate", r"carbon|climate|CBAM|bank|\bFDI\b|bond|M&A|green debt|emission"),
+    ("industrial-policy", r"\bPLI\b|factor(y|ies)|industrial|scheme|subsid|manufactur"),
+]
 
 
 title_of = lambda p: titles.get(p["slug"]) or html.unescape(p["title"]).strip()

@@ -15,19 +15,15 @@ export type Article = {
   categories: string[];
 };
 
+/** Decode HTML entities (named, decimal and hex) to plain text via inert DOM parsing. */
+export function decodeEntities(text: string): string {
+  return new DOMParser().parseFromString(text, "text/html").documentElement.textContent ?? text;
+}
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
 export function stripHtml(html: string): string {
-  return html
-    .replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, " ")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/&nbsp;/g, " ")
-    .replace(/&amp;/g, "&")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/\s+/g, " ")
-    .trim();
+  const tags = html.replace(/<script[\s\S]*?<\/script>|<style[\s\S]*?<\/style>/gi, " ").replace(/<[^>]+>/g, " ");
+  return decodeEntities(tags).replace(/\s+/g, " ").trim();
 }
 
 export function excerpt(text: string, max = 160): string {
@@ -46,7 +42,7 @@ export function mapFeed(json: any): Article[] {
     const link = (e?.link ?? []).find((l: any) => l.rel === "alternate")?.href ?? "";
     return {
       id: e?.id?.$t ?? String(i),
-      title: e?.title?.$t || "Untitled",
+      title: e?.title?.$t ? decodeEntities(e.title.$t).replace(/\s+/g, " ").trim() : "Untitled",
       link: link ? toBlogUrl(link) : "",
       published: e?.published?.$t ?? "",
       image: (thumb ? thumb.replace(/\/s72(-c)?\//, "/w600-h340-c/") : null) ?? imgMatch?.[1] ?? null,
