@@ -3,10 +3,15 @@ import { INSIGHT_THEMES, LIBRARY, isLiveUrl, type InsightItem } from "@/data/ins
 // All curated articles, flattened. Links come only from src/data/insights.ts.
 export const ALL_ARTICLES: InsightItem[] = INSIGHT_THEMES.flatMap((t) => t.items).filter((a) => isLiveUrl(a.url));
 
+// Match on the title and on the address slug's words. Titles change (house-style retitles);
+// a post's slug never does and still carries the words of its original title.
+const matchText = (a: InsightItem) =>
+  `${a.title} ${(a.url.split("/").pop() ?? "").replace(/\.html$/, "").replace(/-/g, " ")}`;
+
 export function matchArticles(pattern: RegExp | null): InsightItem[] {
   if (!pattern) return [];
   const seen = new Set<string>();
-  const pick = (list: InsightItem[]) => list.filter((a) => pattern.test(a.title) && !seen.has(a.url) && seen.add(a.url));
+  const pick = (list: InsightItem[]) => list.filter((a) => pattern.test(matchText(a)) && !seen.has(a.url) && seen.add(a.url));
   const curated = pick(ALL_ARTICLES);
   // Featured matches first; top up from the full library (newest first) to at least 3.
   if (curated.length >= 3) return curated;

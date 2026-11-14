@@ -1,4 +1,4 @@
-import { createFileRoute, Link, notFound } from "@tanstack/react-router";
+import { createFileRoute, Link, notFound, redirect } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { PostBody } from "@/components/site/PostBody";
 import { Button } from "@/components/ui/button";
@@ -7,11 +7,20 @@ import { INSIGHT_THEMES, LIBRARY, LIBRARY_THEMES, articleSlug, findArticle, form
 import { BLOG_POST_FEED_BASE } from "@/config";
 import { jsonp } from "@/lib/jsonp";
 import { hasInteractiveCharts } from "@/lib/sanitizePost";
+import retiredSlugs from "@/data/retiredSlugs.json";
+
+// Posts merged into another or moved to draft on the blog: send old links to the post that replaced them.
+const RETIRED = retiredSlugs as Record<string, string | null>;
 
 export const Route = createFileRoute("/insights/$slug")({
   loader: ({ params }) => {
     const article = findArticle(params.slug);
-    if (!article) throw notFound();
+    if (!article) {
+      const target = RETIRED[params.slug];
+      if (target && findArticle(target))
+        throw redirect({ to: "/insights/$slug", params: { slug: target }, statusCode: 301 });
+      throw notFound();
+    }
     return article;
   },
   head: ({ loaderData }) => {

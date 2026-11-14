@@ -17,9 +17,12 @@ describe("curated articles", () => {
   });
 });
 import { LIBRARY, LIBRARY_THEMES, allFindableArticles, themeOverrides } from "./insights";
+import allArticlesRaw from "./allArticles.json";
+import retiredSlugs from "./retiredSlugs.json";
 describe("full library", () => {
-  it("has 501 articles with numeric post IDs", () => {
-    expect(LIBRARY).toHaveLength(501);
+  it("lists every article in allArticles.json with numeric post IDs", () => {
+    expect(LIBRARY).toHaveLength(allArticlesRaw.articles.length);
+    expect(LIBRARY.length).toBeGreaterThan(400);
     for (const a of LIBRARY) expect(a.postId).toMatch(/^\d+$/);
   });
   it("theme overrides reference real themes and real library articles", () => {
@@ -39,5 +42,14 @@ describe("full library", () => {
   });
   it("round-trips every library article through findArticle", () => {
     for (const a of LIBRARY) expect(articleSlug(findArticle(articleSlug(a.url))!.url)).toBe(articleSlug(a.url));
+  });
+});
+
+describe("retired slugs", () => {
+  it("redirect only to articles that exist, and are not themselves listed", () => {
+    for (const [slug, target] of Object.entries(retiredSlugs as Record<string, string | null>)) {
+      expect(findArticle(slug)).toBeUndefined();
+      if (target) expect(findArticle(target)).toBeDefined();
+    }
   });
 });
