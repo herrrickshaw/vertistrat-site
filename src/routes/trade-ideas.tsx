@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { AlertTriangle, CandlestickChart, LineChart, TrendingUp, Database, Scale } from "lucide-react";
 import { DotGrid, Eyebrow, IconChip, IconCluster, pageHead } from "@/components/site/ui";
+import { BiogasFomRegister } from "@/components/site/BiogasFomRegister";
 import { DISCLAIMER, TRADE_IDEAS_URL, TRADE_STALE_DAYS } from "@/config";
 import { formatDate, isStale, parseTradeIdeas, type Action, type TradeIdea } from "@/lib/feeds";
 
@@ -143,6 +144,8 @@ function TradeIdeas() {
           </div>
         )}
       </div>
+
+      <BiogasFomRegister />
     </div>
   );
 }
