@@ -33,6 +33,20 @@ export function excerpt(text: string, max = 160): string {
   return `${(sp > 80 ? cut.slice(0, sp) : cut).trim()}…`;
 }
 
+/**
+ * Text for a post preview. Blog posts open with a "← All Articles (Index)" link and carry the
+ * standfirst before the headline in the markup, so a plain strip of the first characters shows
+ * navigation text. Drop the nav blocks and prefer the standfirst paragraph when the post has one.
+ */
+export function previewText(html: string): string {
+  const body = html
+    .replace(/<nav[\s\S]*?<\/nav>/gi, " ")
+    .replace(/<div[^>]*class=["'][^"']*topnav-index-link[^"']*["'][^>]*>[\s\S]*?<\/div>/gi, " ");
+  const standfirst = body.match(/<p[^>]*class=["'][^"']*standfirst[^"']*["'][^>]*>([\s\S]*?)<\/p>/i)?.[1];
+  const text = stripHtml(standfirst ?? body);
+  return excerpt(text || stripHtml(body));
+}
+
 export function mapFeed(json: any): Article[] {
   const entries: any[] = json?.feed?.entry ?? [];
   return entries.map((e, i) => {
@@ -46,7 +60,7 @@ export function mapFeed(json: any): Article[] {
       link: link ? toBlogUrl(link) : "",
       published: e?.published?.$t ?? "",
       image: (thumb ? thumb.replace(/\/s72(-c)?\//, "/w600-h340-c/") : null) ?? imgMatch?.[1] ?? null,
-      excerpt: excerpt(stripHtml(html)),
+      excerpt: previewText(html),
       categories: (e?.category ?? []).map((c: any) => c.term).filter(Boolean),
     };
   });

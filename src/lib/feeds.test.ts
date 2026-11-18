@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { decodeEntities, isStale, mapFeed, parseTradeIdeas } from "./feeds";
+import { decodeEntities, isStale, mapFeed, parseTradeIdeas, previewText } from "./feeds";
 
 describe("trade ideas staleness", () => {
   const now = new Date("2026-10-23T00:00:00Z");
@@ -37,5 +37,21 @@ describe("mapFeed", () => {
     })[0]!;
     expect(a.link).toBe("y");
     expect(a.image).toBe("i.jpg");
+  });
+});
+
+describe("previewText", () => {
+  const post =
+    '<div class="gs-head-order"><p class="standfirst">A grouped list of AI tutorial channels.</p>' +
+    '<div class="topnav-index-link"><a href="x">&#8592; All Articles (Index)</a></div>' +
+    '<h1>Learning AI for free</h1></div><p>Body text.</p>';
+  it("skips the index link and uses the standfirst", () => {
+    expect(previewText(post)).toBe("A grouped list of AI tutorial channels.");
+  });
+  it("drops the index link when there is no standfirst", () => {
+    expect(previewText('<div class="topnav-index-link"><a>&#8592; All Articles (Index)</a></div><p>Body text.</p>')).toBe("Body text.");
+  });
+  it("falls back to plain text", () => {
+    expect(previewText("<p>Hi</p>")).toBe("Hi");
   });
 });
