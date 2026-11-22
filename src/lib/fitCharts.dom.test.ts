@@ -108,6 +108,13 @@ describe("fitCharts: charts", () => {
     expect(odd.querySelector("svg")!.style.getPropertyValue("width")).toBe("700px");
   });
 
+  it("ignores zero-size text when taking the median label size", () => {
+    // sizes [6, 12] after dropping the 0: median 12 -> 583px; keeping the 0 would pick 6 -> 700px
+    const root = mount(chart("0 0 700 300", [0, 6, 12]));
+    fitCharts(root);
+    expect(root.querySelector("svg")!.style.getPropertyValue("width")).toBe("583px");
+  });
+
   it("parses viewBox values separated by commas as well as spaces", () => {
     const root = mount(chart("0,0,700,300", [12]));
     fitCharts(root);
