@@ -153,6 +153,19 @@ describe("ArticleGrid", () => {
       expect(screen.queryByRole("group", { name: "Filter by category" })).toBeNull();
     });
 
+    it("is shown even when there is a single category", async () => {
+      jsonpMock.mockResolvedValue({
+        feed: { entry: [entry(1, ["Energy"]), entry(2, ["Energy"])] },
+      });
+      wrap(<ArticleGrid filterable />);
+      const group = await screen.findByRole("group", { name: "Filter by category" });
+      expect(
+        within(group)
+          .getAllByRole("button")
+          .map((b) => b.textContent),
+      ).toEqual(["All", "Energy"]);
+    });
+
     it("offers All plus each distinct category in sorted order", async () => {
       jsonpMock.mockResolvedValue(feed);
       wrap(<ArticleGrid filterable />);
