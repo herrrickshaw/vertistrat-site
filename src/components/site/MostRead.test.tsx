@@ -91,6 +91,7 @@ describe("MostRead", () => {
     ["Food Processing", "bg-success"],
     ["Agri exports", "bg-success"],
     ["Corporate Finance & M&A", "bg-foreground"],
+    ["M&A", "bg-foreground"],
     ["Industrial Policy", "bg-accent-foreground"],
   ])("colours the %s band %s", (tag, cls) => {
     override.items = [asItem(tag)];

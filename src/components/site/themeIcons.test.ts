@@ -29,6 +29,7 @@ describe("tagIcon", () => {
     ["Agriculture", Sprout],
     ["Corporate Finance & M&A", TrendingUp],
     ["Capital markets", TrendingUp],
+    ["M&A", TrendingUp],
     ["Industrial Policy", Landmark],
     ["Something else", Newspaper],
   ])("maps %s", (tag, icon) => {
