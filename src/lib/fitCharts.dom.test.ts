@@ -55,6 +55,12 @@ describe("chartWidthFor boundaries", () => {
     expect(chartWidthFor(700, 12, 582)).toBe(583);
   });
 
+  it("treats a chart exactly 1px short of its natural width as readable", () => {
+    // need = 700 * 10 / 10 = 700, shown + 1 = 700
+    expect(chartWidthFor(700, 10, 699)).toBeNull();
+    expect(chartWidthFor(700, 10, 698)).toBe(700);
+  });
+
   it("honours a custom minimum label size", () => {
     expect(chartWidthFor(700, 10, 343, 14)).toBe(700);
     expect(chartWidthFor(700, 10, 343, 5)).toBe(350);
