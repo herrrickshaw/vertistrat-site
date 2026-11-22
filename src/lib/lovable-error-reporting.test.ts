@@ -1,12 +1,15 @@
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeEach, describe, expect, it, vi, type Mock } from "vitest";
 import { reportLovableError } from "./lovable-error-reporting";
 
-let capture: ReturnType<typeof vi.fn>;
-let runtime: ReturnType<typeof vi.fn>;
+type Capture = (error: unknown, context?: Record<string, unknown>, options?: unknown) => void;
+type Runtime = (payload: { message: string; stack?: string; filename?: string }) => void;
+
+let capture: Mock<Capture>;
+let runtime: Mock<Runtime>;
 
 beforeEach(() => {
-  capture = vi.fn();
-  runtime = vi.fn();
+  capture = vi.fn<Capture>();
+  runtime = vi.fn<Runtime>();
   window.__lovableEvents = { captureException: capture };
   window.__lovableReportRuntimeError = runtime;
   window.history.pushState({}, "", "/insights/some-post");
