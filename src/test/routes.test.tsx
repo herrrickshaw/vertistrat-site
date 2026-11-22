@@ -201,6 +201,42 @@ describe("/insights/$slug", () => {
     expect(h1()).toBeInTheDocument();
   });
 
+  it("issues a permanent (301) redirect from the loader for a retired slug", async () => {
+    const [oldSlug, target] = Object.entries(retiredSlugs as Record<string, string | null>).find(
+      ([, t]) => t && LIBRARY.some((a) => articleSlug(a.url) === t),
+    )!;
+    const { router } = await open("/about");
+    const route = router.routesById["/insights/$slug"] as unknown as {
+      options: { loader: (ctx: { params: { slug: string } }) => unknown };
+    };
+    let thrown: unknown;
+    try {
+      route.options.loader({ params: { slug: oldSlug } });
+    } catch (e) {
+      thrown = e;
+    }
+    expect(thrown).toBeInstanceOf(Response);
+    expect((thrown as Response).status).toBe(301);
+    expect(JSON.stringify((thrown as { options?: unknown }).options)).toContain(target!);
+  });
+
+  it("suggests up to three same-theme articles for a library article that is not curated", async () => {
+    const curated = new Set(INSIGHT_THEMES.flatMap((t) => t.items.map((i) => i.url)));
+    const candidate = LIBRARY.find(
+      (a) =>
+        !curated.has(a.url) &&
+        LIBRARY.filter((b) => b.theme === a.theme && b.url !== a.url).length >= 4,
+    )!;
+    await open(`/insights/${articleSlug(candidate.url)}`);
+    const related = screen.getByRole("region", { name: "Related articles" });
+    const links = within(related).getAllByRole("link");
+    expect(links).toHaveLength(3);
+    const sameTheme = LIBRARY.filter((b) => b.theme === candidate.theme && b.url !== candidate.url)
+      .slice(0, 3)
+      .map((b) => `/insights/${articleSlug(b.url)}`);
+    expect(links.map((a) => a.getAttribute("href"))).toEqual(sameTheme);
+  });
+
   it("shows a 404 for a retired slug with no replacement", async () => {
     const entry = Object.entries(retiredSlugs as Record<string, string | null>).find(([, t]) => !t);
     if (!entry) return;

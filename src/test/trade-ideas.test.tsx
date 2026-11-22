@@ -74,6 +74,24 @@ describe("/trade-ideas with a configured data URL", () => {
     expect(await screen.findByText("Loading…")).toBeInTheDocument();
   });
 
+  it("lets the sample data show while the file is still loading", async () => {
+    fetchMock.mockReturnValue(new Promise(() => {}));
+    await open();
+    expect(await screen.findByText("Loading…")).toBeInTheDocument();
+    fireEvent.click(screen.getByLabelText("Show sample data"));
+    expect(screen.queryByText("Loading…")).toBeNull();
+    expect(symbols()).toHaveLength(4);
+  });
+
+  it("lets the sample data show after the file failed to load", async () => {
+    reply(500, {});
+    await open();
+    await screen.findByText(/Couldn't load the trade ideas file/);
+    fireEvent.click(screen.getByLabelText("Show sample data"));
+    expect(screen.queryByText(/Couldn't load the trade ideas file/)).toBeNull();
+    expect(symbols()).toHaveLength(4);
+  });
+
   it("renders each idea with Indian digit grouping, a dash for missing prices and the thesis", async () => {
     reply(200, [
       idea("AAA", { entry: 1234567.5, target: null, thesis: "Because" }),
