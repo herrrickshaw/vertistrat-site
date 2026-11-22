@@ -31,11 +31,6 @@ describe("buttonVariants", () => {
     expect(cls).toContain(expected);
     expect(cls).not.toContain("py-2");
   });
-
-  it("lets a caller class override a conflicting utility", () => {
-    expect(buttonVariants({ className: "h-20" })).toContain("h-20");
-    expect(buttonVariants({ className: "h-20" })).not.toContain("h-9");
-  });
 });
 
 describe("Button", () => {
@@ -73,6 +68,13 @@ describe("Button", () => {
     const link = screen.getByRole("link", { name: "Link" });
     expect(link).toHaveAttribute("href", "/x");
     expect(link.className).toContain("border-input");
+  });
+
+  it("lets a caller class override a conflicting utility", () => {
+    render(<Button className="h-20">Go</Button>);
+    const button = screen.getByRole("button");
+    expect(button).toHaveClass("h-20");
+    expect(button).not.toHaveClass("h-9");
   });
 
   it("merges the className prop with the variant classes", () => {
