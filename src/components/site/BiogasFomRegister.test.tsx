@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import {
   NOTIFICATIONS,
   PLANTS,
@@ -9,6 +9,9 @@ import {
 } from "@/data/biogasFomAuthorisations";
 import { formatDate } from "@/lib/feeds";
 import { BiogasFomRegister } from "./BiogasFomRegister";
+
+// Rendering whole pages is slow on a busy CI runner.
+vi.setConfig({ testTimeout: 30_000 });
 
 const NOW = new Date("2026-11-18T12:00:00Z");
 

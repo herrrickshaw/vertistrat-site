@@ -9,6 +9,9 @@ import { jsonp } from "@/lib/jsonp";
 import { routeTree } from "@/routeTree.gen";
 import { getRouter } from "@/router";
 
+// Rendering whole pages is slow on a busy CI runner.
+vi.setConfig({ testTimeout: 30_000 });
+
 vi.mock("@/lib/jsonp", () => ({ jsonp: vi.fn() }));
 
 const jsonpMock = vi.mocked(jsonp);

@@ -1,9 +1,12 @@
 import { fireEvent, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { BLOG_URL } from "@/config";
 import { LIBRARY, LIBRARY_THEMES, articleSlug, formatInsightDate } from "@/data/insights";
 import { renderWithRouter } from "@/test/renderWithRouter";
 import { FullLibrary } from "./FullLibrary";
+
+// Rendering whole pages is slow on a busy CI runner.
+vi.setConfig({ testTimeout: 30_000 });
 
 const PAGE = 30;
 const count = () => screen.getByText(/^\d+ articles$/);

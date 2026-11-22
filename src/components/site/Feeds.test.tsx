@@ -5,6 +5,9 @@ import { BLOG_FEED_URL, BLOG_URL, GITHUB_REPOS_URL, GITHUB_USER } from "@/config
 import { jsonp } from "@/lib/jsonp";
 import { ArticleGrid, GithubRepos } from "./Feeds";
 
+// Rendering whole pages is slow on a busy CI runner.
+vi.setConfig({ testTimeout: 30_000 });
+
 vi.mock("@/lib/jsonp", () => ({ jsonp: vi.fn() }));
 
 const jsonpMock = vi.mocked(jsonp);

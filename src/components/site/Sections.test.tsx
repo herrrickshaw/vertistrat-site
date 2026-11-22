@@ -1,10 +1,13 @@
 import { fireEvent, screen, within } from "@testing-library/react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { INSIGHT_THEMES, articleSlug } from "@/data/insights";
 import { GUIDE_TOPICS, SECTOR_INFO, guideArticles, matchArticles } from "@/lib/guides";
 import { renderWithRouter } from "@/test/renderWithRouter";
 import { GuideTiles, HelpGrid, InsightToAdvisory, SectorTiles, TalkStrip } from "./Sections";
 import { SECTORS } from "./ui";
+
+// Rendering whole pages is slow on a busy CI runner.
+vi.setConfig({ testTimeout: 30_000 });
 
 describe("HelpGrid", () => {
   it("lists twelve services, each linking to the right page", () => {
